@@ -3,9 +3,11 @@
 from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
+from test_data.create_random_data import save_sorted
 #插入排序法，从小到大排序
 @log_time
-def insertion_sort(array):
+def insertion_sort(origin_array):
+    array=origin_array[:]
     n=len(array)
     if n==0 :
         return None
@@ -28,9 +30,8 @@ def insertion_sort(array):
 if __name__=='__main__':
     numbers=100000
     create_random_data(numbers)
-    data=read_random_data(numbers)
-    insertion_sort(data)
-    with open('sorted_%s.txt'%numbers,'w') as f:
-        for rst in data:
-            f.write(str(rst)+'\n')
-    #print '排序后:\n',data
+    origin_data=read_random_data(numbers)
+    sorted_data=insertion_sort(origin_data)
+    save_sorted(sorted_data)
+    print "排序前(前10个数据):\n", origin_data[:10]
+    print "排序后(前10个数据):\n", sorted_data[:10]

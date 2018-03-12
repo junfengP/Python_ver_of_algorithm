@@ -3,11 +3,13 @@
 from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
-
+from test_data.create_random_data import save_sorted
 class Merge_sort():
     @log_time
     def merge_sort(self,A):
-        self.sort(A,0,len(A)-1)
+        B=A[:] #不在原数据上改动
+        return self.sort(B,0,len(B)-1)
+
 
     def sort(self,A,p,r):  #对 A[p...r]进行归并排序
         if p<r:
@@ -15,6 +17,7 @@ class Merge_sort():
             self.sort(A,p,q)   #对子数组进行归并排序
             self.sort(A,q+1,r)
             self.merge(A,p,q,r)  #合并子数组
+            return A
 
     def merge(self,A,p,q,r):
         INFINITE_MAX=10001 #极大值 标志位
@@ -41,11 +44,9 @@ class Merge_sort():
 if __name__=='__main__':
     numbers = 100000
     create_random_data(numbers)
-    data = read_random_data(numbers)
+    origin_data = read_random_data(numbers)
     merge=Merge_sort()
-    #print "排序前:\n",data
-    merge.merge_sort(data)
-    #print "排序后:\n", data
-    with open('sorted_%s.txt'%numbers,'w') as f:
-        for rst in data:
-            f.write(str(rst)+'\n')
+    sorted_data=merge.merge_sort(origin_data)
+    save_sorted(sorted_data)
+    print "排序前(前10个数据):\n", origin_data[:10]
+    print "排序后(前10个数据):\n", sorted_data[:10]
