@@ -4,8 +4,11 @@ from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
 from test_data.create_random_data import save_sorted
-class Merge_sort():
-    @log_time
+
+class Merge_sort(object): 
+    def __init__(self):
+        pass
+    @log_time    
     def merge_sort(self,A):
         B=A[:] #不在原数据上改动
         return self.sort(B,0,len(B)-1)
@@ -34,7 +37,7 @@ class Merge_sort():
         i=0
         j=0
         for k in range(p,r+1):
-            if L[i]<R[j]:
+            if L[i]<=R[j]:
                 A[k]=L[i]
                 i+=1
             else:
