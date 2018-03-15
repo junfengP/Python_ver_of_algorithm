@@ -3,11 +3,11 @@
 
 
 class Tree_Node():
-    def __init__(self, value, LNode=None, RNode=None, PNode=None):
+    def __init__(self, value, left=None, right=None, p=None):
         self.value = value
-        self.LNode = LNode
-        self.RNode = RNode
-        self.PNode = PNode
+        self.left = left
+        self.right = right
+        self.p = p
 
     def __repr__(self):
         return str(self.value)
@@ -23,52 +23,52 @@ class BST():
 
     def inorder_tree_walk(self, x):
         if x != None:
-            self.inorder_tree_walk(x.LNode)
+            self.inorder_tree_walk(x.left)
             print x.value
-            self.inorder_tree_walk(x.RNode)
+            self.inorder_tree_walk(x.right)
 
     def tree_search(self, x, k):
         if x == None or k == x.value:
             return x
         if k < x.value:
-            return self.tree_search(x.LNode, k)
+            return self.tree_search(x.left, k)
         else:
-            return self.tree_search(x.RNode, k)
+            return self.tree_search(x.right, k)
 
     def iterative_tree_search(self, x, k):
         while x != None and k != x.value:
             if k < x.value:
-                x = x.LNode
+                x = x.left
             else:
-                x = x.RNode
+                x = x.right
         return x
 
     def tree_minimum(self, x):
-        while x.LNode != None:
-            x = x.LNode
+        while x.left != None:
+            x = x.left
         return x
 
     def tree_maximum(self, x):
-        while x.RNode != None:
-            x = x.RNode
+        while x.right != None:
+            x = x.right
         return x
 
     def tree_successor(self, x):
-        if x.RNode != None:
-            return self.tree_minimum(x.RNode)
-        y = x.PNode
-        while y != None and x == y.RNode:
+        if x.right != None:
+            return self.tree_minimum(x.right)
+        y = x.p
+        while y != None and x == y.right:
             x = y
-            y = y.PNode
+            y = y.p
         return y
 
     def tree_predecessor(self, x):
-        if x.LNode != None:
-            return self.tree_maximum(x.LNode)
-        y = x.PNode
-        while y != None and x == y.LNode:
+        if x.left != None:
+            return self.tree_maximum(x.left)
+        y = x.p
+        while y != None and x == y.left:
             x = y
-            y = y.PNode
+            y = y.p
         return y
 
     def tree_insert(self, z):
@@ -79,41 +79,41 @@ class BST():
         while x != None:
             y = x
             if z.value < x.value:
-                x = x.LNode
+                x = x.left
             else:
-                x = x.RNode
-        z.PNode = y
+                x = x.right
+        z.p = y
         if y == None:
             self.T_root = z
         elif z.value < y.value:
-            y.LNode = z
+            y.left = z
         else:
-            y.RNode = z
+            y.right = z
 
     def transplant(self, u, v):
-        if u.PNode == None:
+        if u.p == None:
             self.T_root = v
-        elif u == u.PNode.LNode:
-            u.PNode.LNode = v
+        elif u == u.p.left:
+            u.p.left = v
         else:
-            u.PNode.RNode = v
+            u.p.right = v
         if v != None:
-            v.PNode = u.PNode
+            v.p = u.p
 
     def tree_delete(self, z):
-        if z.LNode==None:
-            self.transplant(z,z.RNode)
-        elif z.RNode==None:
-            self.transplant(z,z.LNode)
+        if z.left==None:
+            self.transplant(z,z.right)
+        elif z.right==None:
+            self.transplant(z,z.left)
         else:
-            y=self.tree_minimum(z.RNode)
-            if y.PNode!=z:
-                self.transplant(y,y.RNode)
-                y.RNode=z.RNode
-                y.RNode.PNode=y
+            y=self.tree_minimum(z.right)
+            if y.p!=z:
+                self.transplant(y,y.right)
+                y.right=z.right
+                y.right.p=y
             self.transplant(z,y)
-            y.LNode=z.LNode
-            y.LNode.PNode=y
+            y.left=z.left
+            y.left.p=y
 
 
 if __name__ == '__main__':
