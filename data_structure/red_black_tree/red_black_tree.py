@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-
+from data_structure.binary_search_tree.binary_search_tree import BST
 class RBTreeColor():
     BLACK = 1
     RED = 0
@@ -20,7 +20,7 @@ class RBTReeNode(RBTreeColor):
             "black" if self.color == self.BLACK else "red")
 
 
-class RBTree(RBTreeColor):
+class RBTree(RBTreeColor,BST):
     def __init__(self):
         self.nil = RBTReeNode(value=None)
         self.root = self.nil
@@ -190,58 +190,6 @@ class RBTree(RBTreeColor):
                     x = self.root
         x.color=self.BLACK
 
-    def inorder_tree_walk(self, x):
-        if x != self.nil:
-            self.inorder_tree_walk(x.left)
-            print x
-            self.inorder_tree_walk(x.right)
-
-    def get_root(self):
-        return self.root
-
-    def tree_minimum(self, x):
-        while x.left != self.nil:
-            x = x.left
-        return x
-
-    def tree_maximum(self, x):
-        while x.right != self.nil:
-            x = x.right
-        return x
-    def tree_search(self, x, k):
-        if x == self.nil or k == x.value:
-            return x
-        if k < x.value:
-            return self.tree_search(x.left, k)
-        else:
-            return self.tree_search(x.right, k)
-
-    def iterative_tree_search(self, x, k):
-        while x !=self.nil and k != x.value:
-            if k < x.value:
-                x = x.left
-            else:
-                x = x.right
-        return x
-
-
-    def tree_successor(self, x):
-        if x.right !=self.nil:
-            return self.tree_minimum(x.right)
-        y = x.p
-        while y !=self.nil and x == y.right:
-            x = y
-            y = y.p
-        return y
-
-    def tree_predecessor(self, x):
-        if x.left !=self.nil:
-            return self.tree_maximum(x.left)
-        y = x.p
-        while y !=self.nil and x == y.left:
-            x = y
-            y = y.p
-        return y
 
 
 if __name__ == "__main__":

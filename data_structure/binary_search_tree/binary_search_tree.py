@@ -16,19 +16,20 @@ class Tree_Node():
 class BST:
 
     def __init__(self):
-        self.root = None
+        self.nil=Tree_Node(value=None)
+        self.root = self.nil
 
     def get_root(self):
         return self.root
 
     def inorder_tree_walk(self, x):
-        if x is not None:
+        if x !=self.nil:
             self.inorder_tree_walk(x.left)
-            print x.value
+            print x
             self.inorder_tree_walk(x.right)
 
     def tree_search(self, x, k):
-        if x is None or k == x.value:
+        if x ==self.nil or k == x.value:
             return x
         if k < x.value:
             return self.tree_search(x.left, k)
@@ -36,7 +37,7 @@ class BST:
             return self.tree_search(x.right, k)
 
     def iterative_tree_search(self, x, k):
-        while x is not None and k != x.value:
+        while x !=self.nil and k != x.value:
             if k < x.value:
                 x = x.left
             else:
@@ -44,29 +45,29 @@ class BST:
         return x
 
     def tree_minimum(self, x):
-        while x.left is not None:
+        while x.left !=self.nil:
             x = x.left
         return x
 
     def tree_maximum(self, x):
-        while x.right is not None:
+        while x.right !=self.nil:
             x = x.right
         return x
 
     def tree_successor(self, x):
-        if x.right is not None:
+        if x.right !=self.nil:
             return self.tree_minimum(x.right)
         y = x.p
-        while y is not None and x == y.right:
+        while y !=self.nil and x == y.right:
             x = y
             y = y.p
         return y
 
     def tree_predecessor(self, x):
-        if x.left is not None:
+        if x.left !=self.nil:
             return self.tree_maximum(x.left)
         y = x.p
-        while y is not None and x == y.left:
+        while y !=self.nil and x == y.left:
             x = y
             y = y.p
         return y
@@ -74,36 +75,38 @@ class BST:
     def tree_insert(self, z):
         if not isinstance(z, Tree_Node):
             z = Tree_Node(z)
-        y = None
+        y = self.nil
         x = self.root
-        while x is not None:
+        while x !=self.nil:
             y = x
             if z.value < x.value:
                 x = x.left
             else:
                 x = x.right
         z.p = y
-        if y is None:
+        if y ==self.nil:
             self.root = z
         elif z.value < y.value:
             y.left = z
         else:
             y.right = z
+        z.left = self.nil
+        z.right = self.nil
 
     def transplant(self, u, v):
-        if u.p is None:
+        if u.p ==self.nil:
             self.root = v
         elif u == u.p.left:
             u.p.left = v
         else:
             u.p.right = v
-        if v is None:
+        if v ==self.nil:
             v.p = u.p
 
     def tree_delete(self, z):
-        if z.left is None:
+        if z.left ==self.nil:
             self.transplant(z, z.right)
-        elif z.right is None:
+        elif z.right ==self.nil:
             self.transplant(z, z.left)
         else:
             y = self.tree_minimum(z.right)
