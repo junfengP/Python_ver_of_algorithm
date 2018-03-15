@@ -82,15 +82,15 @@ class RBTree(RBTreeColor):
         while z.p.color == self.RED:
             if z.p == z.p.p.left:
                 y = z.p.p.right
-                if y.color == self.RED: #case 1
+                if y.color == self.RED:  # case 1
                     z.p.color = self.BLACK
                     y.color = self.BLACK
                     z.p.p.color = self.RED
                     z = z.p.p
-                elif z == z.p.right:  #case 2
+                elif z == z.p.right:  # case 2
                     z == z.p
                     self.left_rotate(z)
-                else:   #case 3
+                else:  # case 3
                     z.p.color = self.BLACK
                     z.p.p.color = self.RED
                     self.right_rotate(z.p.p)
@@ -110,8 +110,88 @@ class RBTree(RBTreeColor):
                     self.left_rotate(z.p.p)
         self.root.color = self.BLACK
 
+    def rb_transplant(self, u, v):
+        if u.p == self.nil:
+            self.root = v
+        elif u == u.p.left:
+            u.p.left = v
+        else:
+            u.p.right = v
+        v.p = u.p
+
+    def rb_delete(self, z):
+        y = z
+        y_original_color = y.color
+        if z.left == self.nil:
+            x = z.right
+            self.rb_transplant(z, z.right)
+        elif z.right == self.nil:
+            x = z.left
+            self.rb_transplant(z, z.left)
+        else:
+            y = self.tree_minimum(z.right)
+            x = y.right
+            if y.p == z:
+                x.p = y
+            else:
+                self.rb_transplant(y, y.right)
+                y.right = z.right
+                y.right.p = y
+            self.rb_transplant(z, y)
+            y.left = z.left
+            y.left.p = y
+            y.color = z.color
+        if y_original_color == self.BLACK:
+            self.rb_delete_fixup(x)
+
+    def rb_delete_fixup(self, x):
+        while x != self.root and x.color == self.BLACK:
+            if x == x.p.left:
+                w = x.p.right
+                if w.color == self.RED:
+                    w.color = self.BLACK
+                    x.p.color = self.RED
+                    self.left_rotate(x.p)
+                    w=x.p.right
+                if w.left.color==self.BLACK and w.right.color==self.BLACK:
+                    w.color=self.RED
+                    x=x.p
+                elif w.right.color==self.BLACK:
+                    w.left.color=self.BLACK
+                    w.color=self.RED
+                    self.right_rotate(w)
+                    w=x.p.right
+                else:
+                    w.color=x.p.color
+                    x.p.color=self.BLACK
+                    w.right.color=self.BLACK
+                    self.left_rotate(x.p)
+                    x=self.root
+            else:
+                w = x.p.left
+                if w.color == self.RED:
+                    w.color = self.BLACK
+                    x.p.color = self.RED
+                    self.right_rotate(x.p)
+                    w = x.p.left
+                if w.right.color == self.BLACK and w.left.color == self.BLACK:
+                    w.color = self.RED
+                    x = x.p
+                elif w.left.color == self.BLACK:
+                    w.right.color = self.BLACK
+                    w.color = self.RED
+                    self.left_rotate(w)
+                    w = x.p.left
+                else:
+                    w.color = x.p.color
+                    x.p.color = self.BLACK
+                    w.left.color = self.BLACK
+                    self.right_rotate(x.p)
+                    x = self.root
+        x.color=self.BLACK
+
     def inorder_tree_walk(self, x):
-        if x !=self.nil:
+        if x != self.nil:
             self.inorder_tree_walk(x.left)
             print x
             self.inorder_tree_walk(x.right)
@@ -119,9 +199,62 @@ class RBTree(RBTreeColor):
     def get_root(self):
         return self.root
 
-if __name__=="__main__":
-    rb=RBTree()
-    for i in range(1,10):
+    def tree_minimum(self, x):
+        while x.left != self.nil:
+            x = x.left
+        return x
+
+    def tree_maximum(self, x):
+        while x.right != self.nil:
+            x = x.right
+        return x
+    def tree_search(self, x, k):
+        if x == self.nil or k == x.value:
+            return x
+        if k < x.value:
+            return self.tree_search(x.left, k)
+        else:
+            return self.tree_search(x.right, k)
+
+    def iterative_tree_search(self, x, k):
+        while x !=self.nil and k != x.value:
+            if k < x.value:
+                x = x.left
+            else:
+                x = x.right
+        return x
+
+
+    def tree_successor(self, x):
+        if x.right !=self.nil:
+            return self.tree_minimum(x.right)
+        y = x.p
+        while y !=self.nil and x == y.right:
+            x = y
+            y = y.p
+        return y
+
+    def tree_predecessor(self, x):
+        if x.left !=self.nil:
+            return self.tree_maximum(x.left)
+        y = x.p
+        while y !=self.nil and x == y.left:
+            x = y
+            y = y.p
+        return y
+
+
+if __name__ == "__main__":
+    rb = RBTree()
+    for i in range(1, 10):
         rb.rb_insert(i)
-    print "root:",rb.get_root()
-    print "inorder:",rb.inorder_tree_walk(rb.get_root())
+    print "root:", rb.get_root()
+    print "inorder:\n", rb.inorder_tree_walk(rb.get_root())
+    print "minimum:",rb.tree_minimum(rb.get_root())
+    print "maximum:",rb.tree_maximum(rb.get_root())
+    print "search 5:",rb.tree_search(rb.get_root(),5)
+    rb.rb_delete(rb.tree_search(rb.get_root(),4))
+    print "root:", rb.get_root()
+    print "root successor:", rb.tree_successor(rb.get_root())
+    print "root predecessor:", rb.tree_predecessor(rb.get_root())
+    print "inorder:\n", rb.inorder_tree_walk(rb.get_root())
