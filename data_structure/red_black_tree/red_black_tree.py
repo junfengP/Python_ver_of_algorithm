@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # coding=utf-8
-from data_structure.binary_search_tree.binary_search_tree import BST
+from data_structure.binary_search_tree.binary_search_tree import BST, Tree_Node
+
+
 class RBTreeColor():
     BLACK = 1
     RED = 0
 
 
-class RBTReeNode(RBTreeColor):
+class RBTreeNode(Tree_Node, RBTreeColor):
     def __init__(self, value, color=RBTreeColor.BLACK, left=None, right=None, p=None):
-        self.value = value
-        self.left = left
-        self.right = right
-        self.p = p
+        Tree_Node.__init__(self, value, left, right, p)
         self.color = color
 
     def __repr__(self):
@@ -20,9 +19,9 @@ class RBTReeNode(RBTreeColor):
             "black" if self.color == self.BLACK else "red")
 
 
-class RBTree(RBTreeColor,BST):
+class RBTree(RBTreeColor, BST):
     def __init__(self):
-        self.nil = RBTReeNode(value=None)
+        self.nil = RBTreeNode(value=None)
         self.root = self.nil
 
     def left_rotate(self, x):
@@ -39,6 +38,7 @@ class RBTree(RBTreeColor,BST):
             x.p.right = y
         y.left = x
         x.p = y
+        return y
 
     def right_rotate(self, y):
         x = y.left
@@ -54,10 +54,11 @@ class RBTree(RBTreeColor,BST):
             y.p.right = x
         x.right = y
         y.p = x
+        return x
 
     def rb_insert(self, z):
-        if not isinstance(z, RBTReeNode):
-            z = RBTReeNode(z, color=self.RED)
+        if not isinstance(z, RBTreeNode):
+            z = RBTreeNode(z, color=self.RED)
         y = self.nil
         x = self.root
         while x != self.nil:
@@ -130,10 +131,9 @@ class RBTree(RBTreeColor,BST):
             self.rb_transplant(z, z.left)
         else:
             y = self.tree_minimum(z.right)
+            y_original_color=y.color
             x = y.right
-            if y.p == z:
-                x.p = y
-            else:
+            if y.p != z:
                 self.rb_transplant(y, y.right)
                 y.right = z.right
                 y.right.p = y
@@ -152,21 +152,21 @@ class RBTree(RBTreeColor,BST):
                     w.color = self.BLACK
                     x.p.color = self.RED
                     self.left_rotate(x.p)
-                    w=x.p.right
-                if w.left.color==self.BLACK and w.right.color==self.BLACK:
-                    w.color=self.RED
-                    x=x.p
-                elif w.right.color==self.BLACK:
-                    w.left.color=self.BLACK
-                    w.color=self.RED
+                    w = x.p.right
+                if w.left.color == self.BLACK and w.right.color == self.BLACK:
+                    w.color = self.RED
+                    x = x.p
+                elif w.right.color == self.BLACK:
+                    w.left.color = self.BLACK
+                    w.color = self.RED
                     self.right_rotate(w)
-                    w=x.p.right
+                    w = x.p.right
                 else:
-                    w.color=x.p.color
-                    x.p.color=self.BLACK
-                    w.right.color=self.BLACK
+                    w.color = x.p.color
+                    x.p.color = self.BLACK
+                    w.right.color = self.BLACK
                     self.left_rotate(x.p)
-                    x=self.root
+                    x = self.root
             else:
                 w = x.p.left
                 if w.color == self.RED:
@@ -188,8 +188,7 @@ class RBTree(RBTreeColor,BST):
                     w.left.color = self.BLACK
                     self.right_rotate(x.p)
                     x = self.root
-        x.color=self.BLACK
-
+        x.color = self.BLACK
 
 
 if __name__ == "__main__":
@@ -198,10 +197,11 @@ if __name__ == "__main__":
         rb.rb_insert(i)
     print "root:", rb.get_root()
     print "inorder:\n", rb.inorder_tree_walk(rb.get_root())
-    print "minimum:",rb.tree_minimum(rb.get_root())
-    print "maximum:",rb.tree_maximum(rb.get_root())
-    print "search 5:",rb.tree_search(rb.get_root(),5)
-    rb.rb_delete(rb.tree_search(rb.get_root(),4))
+    print "minimum:", rb.tree_minimum(rb.get_root())
+    print "maximum:", rb.tree_maximum(rb.get_root())
+    print "search 5:", rb.tree_search(rb.get_root(), 5)
+    rb.rb_delete(rb.tree_search(rb.get_root(), 7))
+    rb.rb_delete(rb.tree_search(rb.get_root(), 6))
     print "root:", rb.get_root()
     print "root successor:", rb.tree_successor(rb.get_root())
     print "root predecessor:", rb.tree_predecessor(rb.get_root())
