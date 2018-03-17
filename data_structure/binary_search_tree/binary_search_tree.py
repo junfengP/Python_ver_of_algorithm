@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-# coding=utf-8
-
+#!/usr/bin/python3
 
 class Tree_Node:
     def __init__(self, value, left=None, right=None, p=None):
@@ -25,7 +23,7 @@ class BST:
     def inorder_tree_walk(self, x):
         if x !=self.nil:
             self.inorder_tree_walk(x.left)
-            print x
+            print( x )
             self.inorder_tree_walk(x.right)
 
     def tree_search(self, x, k):
@@ -123,9 +121,9 @@ if __name__ == '__main__':
     bst = BST()
     for i in range(10, 1, -1):
         bst.tree_insert(i)
-    print "树的最小值", bst.tree_minimum(bst.get_root())
-    print "树的最大值", bst.tree_maximum(bst.get_root())
-    print "删除节点4"
+    print( "树的最小值", bst.tree_minimum(bst.get_root()))
+    print( "树的最大值", bst.tree_maximum(bst.get_root()))
+    print( "删除节点4")
     bst.tree_delete(bst.tree_search(bst.get_root(), 4))
-    print "节点5的前驱", bst.tree_predecessor(bst.tree_search(bst.get_root(), 5))
-    print "节点5的后继", bst.tree_successor(bst.tree_search(bst.get_root(), 5))
+    print( "节点5的前驱", bst.tree_predecessor(bst.tree_search(bst.get_root(), 5)))
+    print( "节点5的后继", bst.tree_successor(bst.tree_search(bst.get_root(), 5)))

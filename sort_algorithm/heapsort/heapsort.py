@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/python3
 from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
@@ -55,13 +54,13 @@ class Heap():
 
     def build_max_heap(self):
         self.heap_size = len(self.A)
-        for i in range(len(self.A) / 2, 0, -1):  # 从len(A)/2 到 1
+        for i in range(len(self.A) // 2, 0, -1):  # 从len(A)/2 到 1
             self.max_heaplify(i)
         return self.A
 
     def build_min_heap(self):
         self.heap_size = len(self.A)
-        for i in range(len(self.A) / 2, 0, -1):  # 从len(A)/2 到 1
+        for i in range(len(self.A) // 2, 0, -1):  # 从len(A)/2 到 1
             self.min_heaplify(i)
         return self.A
 
@@ -140,26 +139,26 @@ class Heap():
 def heap_test():
     data = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
     heap = Heap(data)
-    print "最大堆:", heap.build_max_heap()
-    print "最大元素:", heap.heap_maximum()
-    print "取出最大元素:", heap.heap_extract_max()
-    print "取出最大元素后的堆:", heap.get_heap()
-    print "插入元素16后的堆", heap.max_heap_insert(16)
-    print "将第二个元素提升到17:", heap.heap_increase_key(2, 17)
-    print "删除第2个元素", heap.max_heap_delete(2)
-    print "堆排序", heap.heapsort()
+    print( "最大堆:", heap.build_max_heap())
+    print( "最大元素:", heap.heap_maximum())
+    print( "取出最大元素:", heap.heap_extract_max())
+    print( "取出最大元素后的堆:", heap.get_heap())
+    print( "插入元素16后的堆", heap.max_heap_insert(16))
+    print( "将第二个元素提升到17:", heap.heap_increase_key(2, 17))
+    print( "删除第2个元素", heap.max_heap_delete(2))
+    print( "堆排序", heap.heapsort())
 
 
 def heap_test2():
     data = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
     heap = Heap(data)
-    print "最小堆:", heap.build_min_heap()
-    print "最小元素:", heap.heap_minimum()
-    print "取出最小元素:", heap.heap_extract_min()
-    print "取出最小元素后的堆:", heap.get_heap()
-    print "插入元素5后的堆", heap.min_heap_insert(5)
-    print "将第二个元素降低到-1:", heap.heap_decrease_key(2, -1)
-    print "删除第2个元素", heap.min_heap_delete(2)
+    print( "最小堆:", heap.build_min_heap())
+    print( "最小元素:", heap.heap_minimum())
+    print( "取出最小元素:", heap.heap_extract_min())
+    print( "取出最小元素后的堆:", heap.get_heap())
+    print( "插入元素5后的堆", heap.min_heap_insert(5))
+    print( "将第二个元素降低到-1:", heap.heap_decrease_key(2, -1))
+    print( "删除第2个元素", heap.min_heap_delete(2))
 
 
 def sort_test():
@@ -169,8 +168,8 @@ def sort_test():
     heap = Heap(origin_data)
     sorted_data = heap.heapsort()
     save_sorted(sorted_data)
-    print "排序前(前10个数据):\n", origin_data[:10]
-    print "排序后(前10个数据):\n", sorted_data[:10]
+    print( "排序前(前10个数据):\n", origin_data[:10])
+    print( "排序后(前10个数据):\n", sorted_data[:10])
 
 
 if __name__ == '__main__':

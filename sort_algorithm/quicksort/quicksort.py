@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/python3
 from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
@@ -68,6 +67,6 @@ if __name__ == '__main__':
     r_sorted_data = r_quick.quicksort(origin_data)
     l_sorted_data = list_sort(origin_data)
     # save_sorted(r_sorted_data)
-    print "排序前(前10个数据):\n", origin_data[:10]
-    print "排序后(前10个数据):\n", r_sorted_data[:10]
-    print "list排序后(前10个数据):\n", l_sorted_data[:10]
+    print( "排序前(前10个数据):\n", origin_data[:10])
+    print("排序后(前10个数据):\n", r_sorted_data[:10])
+    print("list排序后(前10个数据):\n", l_sorted_data[:10])

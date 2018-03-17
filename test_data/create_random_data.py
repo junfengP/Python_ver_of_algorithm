@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#coding=utf-8
+#!/usr/bin/python3
 import random
 import time
 
@@ -10,7 +9,7 @@ def log_time(func):
         rst=func(*args, **kwargs)
         endTime=time.time()
         msecs=(endTime-startTime)*1000
-        print func.__name__,' runtime is: ',msecs,' ms'
+        print (func.__name__,' runtime is: ',msecs,' ms')
         return rst
     return wrapper
 
@@ -41,5 +40,5 @@ def save_sorted(sorted_data):
 if __name__=='__main__':
     create_random_data(10)
     data=read_random_data(10)
-    print data
+    print (data)
 

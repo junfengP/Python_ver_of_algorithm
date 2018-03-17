@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/python3
 from test_data.create_random_data import log_time
 from test_data.create_random_data import create_random_data
 from test_data.create_random_data import read_random_data
@@ -17,7 +16,7 @@ class Merge_sort(object):
 
     def sort(self, A, p, r):  # 对 A[p...r]进行归并排序
         if p < r:
-            q = (p + r) / 2  # 将A[p...r]分成两个子数组
+            q = (p + r) // 2  # 将A[p...r]分成两个子数组
             self.sort(A, p, q)  # 对子数组进行归并排序
             self.sort(A, q + 1, r)
             self.merge(A, p, q, r)  # 合并子数组
@@ -53,5 +52,5 @@ if __name__ == '__main__':
     merge = Merge_sort()
     sorted_data = merge.merge_sort(origin_data)
     save_sorted(sorted_data)
-    print "排序前(前10个数据):\n", origin_data[:10]
-    print "排序后(前10个数据):\n", sorted_data[:10]
+    print("排序前(前10个数据):\n", origin_data[:10])
+    print( "排序后(前10个数据):\n", sorted_data[:10])

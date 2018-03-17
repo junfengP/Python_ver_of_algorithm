@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/python3
 from data_structure.binary_search_tree.binary_search_tree import BST, Tree_Node
 
 
-class RBTreeColor():
+class RBTreeColor:
     BLACK = 1
     RED = 0
 
@@ -195,14 +194,16 @@ if __name__ == "__main__":
     rb = RBTree()
     for i in range(1, 10):
         rb.rb_insert(i)
-    print "root:", rb.get_root()
-    print "inorder:\n", rb.inorder_tree_walk(rb.get_root())
-    print "minimum:", rb.tree_minimum(rb.get_root())
-    print "maximum:", rb.tree_maximum(rb.get_root())
-    print "search 5:", rb.tree_search(rb.get_root(), 5)
+    print( "root:", rb.get_root())
+    print( "inorder:")
+    rb.inorder_tree_walk(rb.get_root())
+    print( "minimum:", rb.tree_minimum(rb.get_root()))
+    print( "maximum:", rb.tree_maximum(rb.get_root()))
+    print( "search 5:", rb.tree_search(rb.get_root(), 5))
     rb.rb_delete(rb.tree_search(rb.get_root(), 7))
     rb.rb_delete(rb.tree_search(rb.get_root(), 6))
-    print "root:", rb.get_root()
-    print "root successor:", rb.tree_successor(rb.get_root())
-    print "root predecessor:", rb.tree_predecessor(rb.get_root())
-    print "inorder:\n", rb.inorder_tree_walk(rb.get_root())
+    print( "root:", rb.get_root())
+    print( "root successor:", rb.tree_successor(rb.get_root()))
+    print( "root predecessor:", rb.tree_predecessor(rb.get_root()))
+    print( "inorder:")
+    rb.inorder_tree_walk(rb.get_root())
