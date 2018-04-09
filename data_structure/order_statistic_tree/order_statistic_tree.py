@@ -3,8 +3,8 @@ from data_structure.red_black_tree.red_black_tree import RBTreeNode, RBTree, RBT
 
 
 class OSTreeNode(RBTreeNode):
-    def __init__(self, value, color=RBTreeColor.BLACK, left=None, right=None, p=None, size=0):
-        RBTreeNode.__init__(self, value, color, left, right, p)
+    def __init__(self, value, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None, size=0):
+        RBTreeNode.__init__(self, value, st_info, color, left, right, p)
         self.size = size
 
     def __repr__(self):
@@ -88,7 +88,7 @@ class OSTree(RBTree):
             y.left = z.left
             y.left.p = y
             y.color = z.color
-            y.size = y.left.size+y.right.size+1
+            y.size = y.left.size + y.right.size + 1
         if y_original_color == self.BLACK:
             self.rb_delete_fixup(x)
 
@@ -111,12 +111,12 @@ if __name__ == '__main__':
     ost = OSTree()
     for i in range(1, 10):
         ost.os_insert(i)
-    print( "中序遍历\n")
+    print("中序遍历\n")
     ost.inorder_tree_walk(ost.get_root())
-    print( "root:", ost.get_root())
+    print("root:", ost.get_root())
     ost.os_delete(ost.tree_search(ost.get_root(), 7))
     ost.os_delete(ost.tree_search(ost.get_root(), 4))
-    print( "中序遍历\n")
+    print("中序遍历\n")
     ost.inorder_tree_walk(ost.get_root())
-    print( "选取第6个元素",ost.os_select(ost.get_root(),6))
-    print( "root的秩",ost.os_rank(ost.get_root()))
+    print("选取第6个元素", ost.os_select(ost.get_root(), 6))
+    print("root的秩", ost.os_rank(ost.get_root()))

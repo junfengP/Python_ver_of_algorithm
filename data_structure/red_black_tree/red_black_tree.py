@@ -8,8 +8,8 @@ class RBTreeColor:
 
 
 class RBTreeNode(Tree_Node, RBTreeColor):
-    def __init__(self, value, color=RBTreeColor.BLACK, left=None, right=None, p=None):
-        Tree_Node.__init__(self, value, left, right, p)
+    def __init__(self, value, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None):
+        Tree_Node.__init__(self, value, st_info, left, right, p)
         self.color = color
 
     def __repr__(self):
@@ -130,7 +130,7 @@ class RBTree(RBTreeColor, BST):
             self.rb_transplant(z, z.left)
         else:
             y = self.tree_minimum(z.right)
-            y_original_color=y.color
+            y_original_color = y.color
             x = y.right
             if y.p != z:
                 self.rb_transplant(y, y.right)
@@ -194,16 +194,16 @@ if __name__ == "__main__":
     rb = RBTree()
     for i in range(1, 10):
         rb.rb_insert(i)
-    print( "root:", rb.get_root())
-    print( "inorder:")
+    print("root:", rb.get_root())
+    print("inorder:")
     rb.inorder_tree_walk(rb.get_root())
-    print( "minimum:", rb.tree_minimum(rb.get_root()))
-    print( "maximum:", rb.tree_maximum(rb.get_root()))
-    print( "search 5:", rb.tree_search(rb.get_root(), 5))
+    print("minimum:", rb.tree_minimum(rb.get_root()))
+    print("maximum:", rb.tree_maximum(rb.get_root()))
+    print("search 5:", rb.tree_search(rb.get_root(), 5))
     rb.rb_delete(rb.tree_search(rb.get_root(), 7))
     rb.rb_delete(rb.tree_search(rb.get_root(), 6))
-    print( "root:", rb.get_root())
-    print( "root successor:", rb.tree_successor(rb.get_root()))
-    print( "root predecessor:", rb.tree_predecessor(rb.get_root()))
-    print( "inorder:")
+    print("root:", rb.get_root())
+    print("root successor:", rb.tree_successor(rb.get_root()))
+    print("root predecessor:", rb.tree_predecessor(rb.get_root()))
+    print("inorder:")
     rb.inorder_tree_walk(rb.get_root())
