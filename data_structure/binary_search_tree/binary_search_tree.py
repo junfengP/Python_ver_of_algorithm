@@ -1,21 +1,20 @@
 #!/usr/bin/python3
-
-class Tree_Node:
-    def __init__(self, value, st_info=None, left=None, right=None, p=None):
-        self.value = value
+class BinaryTreeNode:
+    def __init__(self, key, st_info=None, left=None, right=None, p=None):
+        self.key = key
         self.left = left
         self.right = right
         self.p = p
         self.st_info = st_info  # 卫星数据
 
     def __repr__(self):
-        return str(self.value)
+        return str(self.key)
 
 
 class BST:
 
     def __init__(self):
-        self.nil = Tree_Node(value=None)
+        self.nil = BinaryTreeNode(key=None)
         self.root = self.nil
 
     def get_root(self):
@@ -28,16 +27,16 @@ class BST:
             self.inorder_tree_walk(x.right)
 
     def tree_search(self, x, k):
-        if x == self.nil or k == x.value:
+        if x == self.nil or k == x.key:
             return x
-        if k < x.value:
+        if k < x.key:
             return self.tree_search(x.left, k)
         else:
             return self.tree_search(x.right, k)
 
     def iterative_tree_search(self, x, k):
-        while x != self.nil and k != x.value:
-            if k < x.value:
+        while x != self.nil and k != x.key:
+            if k < x.key:
                 x = x.left
             else:
                 x = x.right
@@ -72,20 +71,20 @@ class BST:
         return y
 
     def tree_insert(self, z):
-        if not isinstance(z, Tree_Node):
-            z = Tree_Node(z)
+        if not isinstance(z, BinaryTreeNode):
+            z = BinaryTreeNode(z)
         y = self.nil
         x = self.root
         while x != self.nil:
             y = x
-            if z.value < x.value:
+            if z.key < x.key:
                 x = x.left
             else:
                 x = x.right
         z.p = y
         if y == self.nil:
             self.root = z
-        elif z.value < y.value:
+        elif z.key < y.key:
             y.left = z
         else:
             y.right = z

@@ -3,13 +3,13 @@ from data_structure.red_black_tree.red_black_tree import RBTreeNode, RBTree, RBT
 
 
 class OSTreeNode(RBTreeNode):
-    def __init__(self, value, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None, size=0):
-        RBTreeNode.__init__(self, value, st_info, color, left, right, p)
+    def __init__(self, key, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None, size=0):
+        RBTreeNode.__init__(self, key, st_info, color, left, right, p)
         self.size = size
 
     def __repr__(self):
-        return "value:{0},color:{1},size:{2}".format(
-            str(self.value),
+        return "key:{0},color:{1},size:{2}".format(
+            str(self.key),
             "black" if self.color == self.BLACK else "red",
             self.size)
 
@@ -17,7 +17,7 @@ class OSTreeNode(RBTreeNode):
 class OSTree(RBTree):
 
     def __init__(self):
-        self.nil = OSTreeNode(value=None)
+        self.nil = OSTreeNode(key=None)
         self.root = self.nil
 
     def os_select(self, x, i):
@@ -46,14 +46,14 @@ class OSTree(RBTree):
         while x != self.nil:
             y = x
             x.size += 1  # 下降规模扩张
-            if z.value < x.value:
+            if z.key < x.key:
                 x = x.left
             else:
                 x = x.right
         z.p = y
         if y == self.nil:
             self.root = z
-        elif z.value < y.value:
+        elif z.key < y.key:
             y.left = z
         else:
             y.right = z

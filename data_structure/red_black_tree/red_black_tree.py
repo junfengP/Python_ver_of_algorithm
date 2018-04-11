@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from data_structure.binary_search_tree.binary_search_tree import BST, Tree_Node
+from data_structure.binary_search_tree.binary_search_tree import BST, BinaryTreeNode
 
 
 class RBTreeColor:
@@ -7,20 +7,20 @@ class RBTreeColor:
     RED = 0
 
 
-class RBTreeNode(Tree_Node, RBTreeColor):
-    def __init__(self, value, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None):
-        Tree_Node.__init__(self, value, st_info, left, right, p)
+class RBTreeNode(BinaryTreeNode, RBTreeColor):
+    def __init__(self, key, st_info=None, color=RBTreeColor.BLACK, left=None, right=None, p=None):
+        BinaryTreeNode.__init__(self, key, st_info, left, right, p)
         self.color = color
 
     def __repr__(self):
-        return "value:{0},color:{1}".format(
-            str(self.value),
+        return "key:{0},color:{1}".format(
+            str(self.key),
             "black" if self.color == self.BLACK else "red")
 
 
 class RBTree(RBTreeColor, BST):
     def __init__(self):
-        self.nil = RBTreeNode(value=None)
+        self.nil = RBTreeNode(key=None)
         self.root = self.nil
 
     def left_rotate(self, x):
@@ -62,14 +62,14 @@ class RBTree(RBTreeColor, BST):
         x = self.root
         while x != self.nil:
             y = x
-            if z.value < x.value:
+            if z.key < x.key:
                 x = x.left
             else:
                 x = x.right
         z.p = y
         if y == self.nil:
             self.root = z
-        elif z.value < y.value:
+        elif z.key < y.key:
             y.left = z
         else:
             y.right = z
